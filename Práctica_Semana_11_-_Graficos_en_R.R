@@ -18,7 +18,7 @@
 # ------------------------------------------------------------------------------
 # DATOS DEL GRUPO
 # ------------------------------------------------------------------------------
-# Integrante A: ______________________  Carne: __________  GitHub: ____________
+# Integrante A: Yelena Hernandez Bermudez  Carne: C33676   GitHub: YelenaH23
 # Integrante B: ______________________  Carne: __________  GitHub: ____________
 # Integrante C: ______________________  Carne: __________  GitHub: ____________
 #               (deje en blanco si el grupo es de dos personas)
@@ -80,7 +80,10 @@
 #       help("iris")         # medidas de tres especies de flores
 #       help("ToothGrowth")  # crecimiento dental en conejillos de indias
 # ==============================================================================
-
+help("airquality") 
+help("mtcars")      
+help("iris")         
+help("ToothGrowth")
 
 # ==============================================================================
 # PARTE 0 - PREPARACION DEL ENTORNO  (5 puntos)   [Responsable: TODO EL GRUPO]
@@ -96,13 +99,17 @@ data("iris")
 data("ToothGrowth")
 
 # >>> ESCRIBA SU CODIGO AQUI: use str() y summary() sobre airquality y mtcars.
+str(airquality) 
+summary(airquality)
 
-
+str(mtcars) 
+summary(mtcars)
 
 # 0.2  En un comentario, indiquen cuantas observaciones y cuantas variables
 #      tiene 'airquality' y mencionen si contiene valores faltantes (NA).
 #
-# Respuesta 0.2: _______________________________________________________________
+# Respuesta 0.2: Airquality tiene 153 observaciones y 6 variables. Si contiene
+# NA's sobre todo en las columnas de ozone y solar.R. 
 
 
 
@@ -122,7 +129,11 @@ data("ToothGrowth")
 # Asignele un titulo, una etiqueta de eje y un color de su eleccion.
 
 # >>> ESCRIBA SU CODIGO AQUI:
-
+barplot(airquality$Wind,
+        main = "Velocidad del viento",
+        xlab = "Observaciones",
+        ylab = "Wind",
+        col = "skyblue")
 
 
 # ------------------------------------------------------------------------------
@@ -148,11 +159,16 @@ data("ToothGrowth")
 # Interprete: en que mes se observa la mayor temperatura mediana.
 
 # >>> ESCRIBA SU CODIGO AQUI:
+boxplot(Temp ~ Month,
+        data = airquality,
+        main = "Temperatura segun el mes",
+        xlab = "Mes",
+        ylab = "Temperatura",
+        col = "coral"
+)
 
 
-
-# Comentario 1.3: ______________________________________________________________
-
+# Comentario 1.3: La mayor temperatura se observa en el mes de julio
 
 
 # ------------------------------------------------------------------------------
@@ -163,9 +179,18 @@ data("ToothGrowth")
 
 # >>> ESCRIBA SU CODIGO AQUI:
 
+plot(
+  airquality$Temp,
+  airquality$Ozone,
+  main = "Relacion entre Temperatura y Ozone",
+  xlab = "Temperatura",
+  ylab = "Ozone",
+  col = "cyan",
+  pch = 19
+)
 
-
-# Comentario 1.4: ______________________________________________________________
+# Comentario 1.4: Se observa que entre mas aumenta la temperatura tambien 
+# aumentan los niveles de ozone
 
 
 
@@ -182,7 +207,7 @@ data("ToothGrowth")
 
 
 # ------------------------------------------------------------------------------
-# Ejercicio 1.6  MULTIPLES GRAFICOS Y EXPORTACION  (5 pts)  [Resp.: Integrante C]
+# Ejercicio 1.6  MULTIPLES GRAFICOS Y EXPORTACION  (5 pts) [Resp.: Integrante C]
 # ------------------------------------------------------------------------------
 # a) Use par(mfrow = c(1, 2)) para colocar DOS graficos base de su eleccion
 #    lado a lado. Restablezca el panel con par(mfrow = c(1, 1)) al terminar.
@@ -217,8 +242,13 @@ library(ggplot2)
 # ahora con ggplot2 y geom_point().
 
 # >>> ESCRIBA SU CODIGO AQUI:
-
-
+ggplot(airquality, aes(x = Temp, y = Ozone)) +
+  geom_point() +
+  labs(
+    title = "Relacion entre Temperatura y Ozone",
+    x = "Temperatura",
+    y = "Ozone"
+  )
 
 # ------------------------------------------------------------------------------
 # Ejercicio 2.2  MAPEO ESTETICO  (4 pts)           [Responsable: Integrante B]
@@ -236,14 +266,23 @@ library(ggplot2)
 
 
 # ------------------------------------------------------------------------------
-# Ejercicio 2.3  GEOMETRIAS ADICIONALES Y FACETAS  (4 pts)  [Resp.: Integrante C]
+# Ejercicio 2.3 GEOMETRIAS ADICIONALES Y FACETAS  (4 pts)  [Resp.: Integrante A]
 # ------------------------------------------------------------------------------
 # Sobre el grafico del 2.2, agregue:
 #   - una capa geom_smooth(method = "lm") para mostrar la tendencia lineal;
 #   - un facet_wrap(~ Month) para separar un panel por mes.
 
 # >>> ESCRIBA SU CODIGO AQUI:
-
+ggplot(airquality, aes(x = Temp, y = Ozone, color = factor(Month))) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~ Month)
+  labs(
+    title = "Relacion entre Temperatura y Ozone por mes",
+    x = "Temperatura",
+    y = "Ozone",
+    color = "Mes"
+  )
 
 
 # ------------------------------------------------------------------------------
@@ -254,7 +293,14 @@ library(ggplot2)
 
 # >>> ESCRIBA SU CODIGO AQUI:
 
-
+ggplot(iris, aes (x = Species, y = Sepal.Length)) +
+    geom_bar(stat = "summary", fun = "mean",
+             fill = "darkorchid") + 
+    labs(
+      title = "Promedio de la longitud del petalo por especie",
+      x = "Especie",
+      y = "Longitud promedio del petalo"
+    )
 
 # ------------------------------------------------------------------------------
 # Ejercicio 2.5  PERSONALIZACION COMPLETA  (4 pts) [Responsable: Integrante B]
@@ -272,10 +318,10 @@ library(ggplot2)
 # ==============================================================================
 # 3.0  Instalen (si es necesario) y carguen el paquete 'maps'.
 # install.packages("maps", dep = TRUE)   # descomente si aun no lo tiene
-library(maps)
+  library(maps)
 
 # ------------------------------------------------------------------------------
-# Ejercicio 3.1  MAPA BASE  (5 pts)                [Responsable: Integrante C]
+# Ejercicio 3.1  MAPA BASE  (5 pts)                [Responsable: Integrante B]
 # ------------------------------------------------------------------------------
 # Dibuje el mapa del mundo con map(database = "world").
 # Luego dibuje UNICAMENTE el mapa de un pais a su eleccion.
@@ -296,8 +342,10 @@ library(maps)
 #       geom_polygon(...) + coord_quickmap()
 
 # >>> ESCRIBA SU CODIGO AQUI:
-
-
+region <- map_data("world", region = "Costa Rica")
+  ggplot(region, aes(long, lat, group = group)) +
+  geom_polygon(fill = "darkseagreen", color = "darkolivegreen") + 
+    coord_quickmap()
 
 # ------------------------------------------------------------------------------
 # Ejercicio 3.3  AGREGAR PUNTOS AL MAPA  (5 pts)   [Responsable: Integrante B]
