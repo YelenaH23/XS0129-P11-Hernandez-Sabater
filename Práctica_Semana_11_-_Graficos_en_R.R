@@ -63,7 +63,7 @@
 #   * SI EL GRUPO ES DE DOS PERSONAS: no existe Integrante C. Repartan sus
 #     ejercicios de forma equitativa entre A y B y ANOTEN aqui como quedaron:
 #     Ej 1.3 -> Yelena   Ej 1.6 -> Sabater   Ej 2.3 -> Yelena 
-#     Ej 3.1 -> Sabater  Ej 4.4 -> Sabater
+#     Ej 3.1 -> Sabater  Ej 4.4 -> Yelena
 #    
 #
 #   El reparto busca que cada persona practique graficos base, ggplot2 y mapas.
@@ -152,7 +152,7 @@ barplot(airquality$Wind,
 
 
 # ------------------------------------------------------------------------------
-# Ejercicio 1.3  DIAGRAMA DE CAJAS  (4 pts)        [Responsable: Integrante C]
+# Ejercicio 1.3  DIAGRAMA DE CAJAS  (4 pts)        [Responsable: Integrante A]
 # ------------------------------------------------------------------------------
 # Construya un diagrama de cajas de airquality$Temp SEGUN el mes (Temp ~ Month).
 # Pista: use la formula  boxplot(Temp ~ Month, data = airquality, ...).
@@ -207,7 +207,7 @@ plot(
 
 
 # ------------------------------------------------------------------------------
-# Ejercicio 1.6  MULTIPLES GRAFICOS Y EXPORTACION  (5 pts) [Resp.: Integrante C]
+# Ejercicio 1.6  MULTIPLES GRAFICOS Y EXPORTACION  (5 pts) [Resp.: Integrante B]
 # ------------------------------------------------------------------------------
 # a) Use par(mfrow = c(1, 2)) para colocar DOS graficos base de su eleccion
 #    lado a lado. Restablezca el panel con par(mfrow = c(1, 1)) al terminar.
@@ -374,7 +374,7 @@ region <- map_data("world", region = "Costa Rica")
 # la persona docente). Anoten su eleccion en el comentario indicado.
 #
 #   GRAFICOS INTERACTIVOS
-#     - plotly        : convierte graficos en interactivos (zoom, hover).
+#     *- plotly        : convierte graficos en interactivos (zoom, hover).*
 #     - highcharter   : graficos interactivos basados en Highcharts.
 #     - dygraphs      : series de tiempo interactivas.
 #
@@ -396,9 +396,10 @@ region <- map_data("world", region = "Costa Rica")
 #     - wordcloud     : nubes de palabras.
 #     - lattice       : sistema de graficos alternativo (graficos en celosia).
 #
-# Libreria elegida: ____________________________________________________________
+# Libreria elegida: plotly
 # Justifiquen en una o dos lineas por que la eligieron:
-#   ___________________________________________________________________________
+#   Elegimos Pltly porque permite crear graficos onteractivos de manera
+# relativamente sencilla, ademas facilita explorar los datos mediante zoom
 #
 # ------------------------------------------------------------------------------
 # 4.2  FICHA DE DOCUMENTACION  (6 pts)             [Responsable: Integrante B]
@@ -435,24 +436,35 @@ region <- map_data("world", region = "Costa Rica")
 # library(__________)
 
 # >>> ESCRIBA SU CODIGO AQUI:
-
-
+  #install.packages("plotly")   
+  library(plotly)
 
 # ------------------------------------------------------------------------------
-# 4.4  COMPARACION Y REFLEXION  (4 pts)            [Responsable: Integrante C]
+# 4.4  COMPARACION Y REFLEXION  (4 pts)            [Responsable: Integrante A]
 # ------------------------------------------------------------------------------
 # Reproduzca un grafico EQUIVALENTE o lo mas parecido posible al del punto 4.3
 # usando el paquete base o ggplot2. Luego responda en comentarios:
 #
 #   a) Que diferencias noto en la cantidad y claridad del codigo:
-#      _________________________________________________________________________
+#      Que se puede agregar funciones interactivas facilmente a un grafico con
+#      un poco de codigo adicional
 #   b) En que situacion recomendaria usar la libreria investigada y en cual
 #      preferiria el paquete base o ggplot2:
-#      _________________________________________________________________________
+#     Recomendaria plotly para cuando alguien quiera hacer graficos interactivos.
+#     Los otros 2 son una manera facil de hacer reportes estadisticos y sin
+#     complicarse tanto.
 
 # >>> ESCRIBA AQUI EL GRAFICO EQUIVALENTE CON BASE O ggplot2:
-
-
+ggplot( airquality,
+        aes(x = Temp, y = Ozone,
+            color = factor(Month))) +
+    geom_point(size = 2) + 
+    labs (
+      title = "Relacion entre Temperatura y Ozone",
+      x = "Temperatura",
+      y = "Ozone",
+      color = "Mes"
+    )
 
 # ==============================================================================
 # PARTE 5 - TRABAJO COLABORATIVO CON GIT Y GITHUB  (15 puntos)
